@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.system.rkjl.mapper.RkRkjlMapper">
+    
+    <resultMap type="RkRkjl" id="RkRkjlResult">
+        <result property="RKXH"    column="RKXH"    />
+        <result property="KDDH"    column="KDDH"    />
+        <result property="QTXX"    column="QTXX"    />
+        <result property="RKRQ"    column="RKRQ"    />
+    </resultMap>
+
+    <sql id="selectRkRkjlVo">
+        select RKXH, KDDH, QTXX, RKRQ from rk_rkjl
+    </sql>
+
+    <select id="selectRkRkjlList" parameterType="RkRkjl" resultMap="RkRkjlResult">
+        <include refid="selectRkRkjlVo"/>
+        <where>  
+            <if test="RKXH != null "> and RKXH = #{RKXH}</if>
+            <if test="KDDH != null  and KDDH != ''"> and KDDH = #{KDDH}</if>
+            <if test="QTXX != null  and QTXX != ''"> and QTXX = #{QTXX}</if>
+            <if test="RKRQ != null "> and RKRQ = #{RKRQ}</if>
+        </where>
+    </select>
+    
+    <select id="selectRkRkjlById" parameterType="Long" resultMap="RkRkjlResult">
+        <include refid="selectRkRkjlVo"/>
+        where RKXH = #{RKXH}
+    </select>
+        
+    <insert id="insertRkRkjl" parameterType="RkRkjl" useGeneratedKeys="true" keyProperty="RKXH">
+        insert into rk_rkjl
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="KDDH != null and KDDH != ''">KDDH,</if>
+            <if test="QTXX != null">QTXX,</if>
+            <if test="RKRQ != null">RKRQ,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="KDDH != null and KDDH != ''">#{KDDH},</if>
+            <if test="QTXX != null">#{QTXX},</if>
+            <if test="RKRQ != null">#{RKRQ},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRkRkjl" parameterType="RkRkjl">
+        update rk_rkjl
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="KDDH != null and KDDH != ''">KDDH = #{KDDH},</if>
+            <if test="QTXX != null">QTXX = #{QTXX},</if>
+            <if test="RKRQ != null">RKRQ = #{RKRQ},</if>
+        </trim>
+        where RKXH = #{RKXH}
+    </update>
+
+    <delete id="deleteRkRkjlById" parameterType="Long">
+        delete from rk_rkjl where RKXH = #{RKXH}
+    </delete>
+
+    <delete id="deleteRkRkjlByIds" parameterType="String">
+        delete from rk_rkjl where RKXH in 
+        <foreach item="RKXH" collection="array" open="(" separator="," close=")">
+            #{RKXH}
+        </foreach>
+    </delete>
+
+</mapper>

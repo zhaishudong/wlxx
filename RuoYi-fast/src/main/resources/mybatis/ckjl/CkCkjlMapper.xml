@@ -32,17 +32,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where CKXH = #{CKXH}
     </select>
         
-    <insert id="insertCkCkjl" parameterType="CkCkjl">
+    <insert id="insertCkCkjl" parameterType="CkCkjl" keyProperty="CKXH" useGeneratedKeys="true" >
         insert into ck_ckjl
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="CKXH != null">CKXH,</if>
             <if test="CKDH != null and CKDH != ''">CKDH,</if>
             <if test="QTXX != null">QTXX,</if>
             <if test="CKRQ != null">CKRQ,</if>
             <if test="RKGL != null">RKGL,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="CKXH != null">#{CKXH},</if>
             <if test="CKDH != null and CKDH != ''">#{CKDH},</if>
             <if test="QTXX != null">#{QTXX},</if>
             <if test="CKRQ != null">#{CKRQ},</if>

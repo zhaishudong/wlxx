@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('ckjlFunction列表')" />
+    <th:block th:include="include :: header('入库列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -10,28 +10,24 @@
                 <form id="formId">
                     <div class="select-list">
                         <ul>
-<!--                            <li>-->
-<!--                                <label>出库序号：</label>-->
-<!--                                <input type="text" name="CKXH"/>-->
-<!--                            </li>-->
                             <li>
-                                <label>出库单号：</label>
-                                <input type="text" name="CKDH"/>
+                                <label>入库序号：</label>
+                                <input type="text" name="RKXH"/>
+                            </li>
+                            <li>
+                                <label>快递单号：</label>
+                                <input type="text" name="KDDH"/>
                             </li>
                             <li>
                                 <label>其他信息：</label>
                                 <input type="text" name="QTXX"/>
                             </li>
                             <li class="select-time">
-                                <label>出库日期：</label>
-                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginCKRQ]"/>
+                                <label>入库日期：</label>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginRKRQ]"/>
                                 <span>-</span>
-                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endCKRQ]"/>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endRKRQ]"/>
                             </li>
-<!--                            <li>-->
-<!--                                <label>出库关联：</label>-->
-<!--                                <input type="text" name="RKGL"/>-->
-<!--                            </li>-->
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -42,16 +38,16 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="ckjl:ckjl:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:rkjl:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="ckjl:ckjl:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:rkjl:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="ckjl:ckjl:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:rkjl:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="ckjl:ckjl:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:rkjl:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
             </div>
@@ -62,9 +58,9 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('ckjl:ckjl:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('ckjl:ckjl:remove')}]];
-        var prefix = ctx + "ckjl/ckjl";
+        var editFlag = [[${@permission.hasPermi('system:rkjl:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:rkjl:remove')}]];
+        var prefix = ctx + "system/rkjl";
 
         $(function() {
             var options = {
@@ -73,38 +69,34 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "ckjlFunction",
+                modalName: "入库",
                 columns: [{
                     checkbox: true
                 },
                 {
-                    field: 'ckxh',
-                    title: '出库序号',
+                    field: 'rkxh',
+                    title: '入库序号',
                     visible: false
                 },
                 {
-                    field: 'ckdh',
-                    title: '出库单号'
+                    field: 'kddh',
+                    title: '快递单号'
                 },
                 {
                     field: 'qtxx',
                     title: '其他信息'
                 },
                 {
-                    field: 'ckrq',
-                    title: '出库日期'
-                },
-                {
-                    field: 'rkgl',
-                    title: '出库关联'
+                    field: 'rkrq',
+                    title: '入库日期'
                 },
                 {
                     title: '操作',
                     align: 'center',
                     formatter: function(value, row, index) {
                         var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.ckxh + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.ckxh + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.rkxh + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.rkxh + '\')"><i class="fa fa-remove"></i>删除</a>');
                         return actions.join('');
                     }
                 }]

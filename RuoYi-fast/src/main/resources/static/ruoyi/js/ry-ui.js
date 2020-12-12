@@ -620,6 +620,7 @@ var table = {
     	form: {
             // 表单重置
             reset: function(formId, tableId) {
+                debugger;
                 table.set(tableId);
             	var currentId = $.common.isEmpty(formId) ? $('form').attr('id') : formId;
             	$("#" + currentId)[0].reset();
@@ -732,6 +733,7 @@ var table = {
             },
             // 关闭窗体
             close: function (index) {
+                debugger;
                 if($.common.isEmpty(index)){
                     var index = parent.layer.getFrameIndex(window.name);
                     parent.layer.close(index);
@@ -1118,6 +1120,26 @@ var table = {
         	    };
         	    $.ajax(config)
             },
+            // 保存信息 刷新表格
+            save4NotClose: function(url, data, callback) {
+                var config = {
+                    url: url,
+                    type: "post",
+                    dataType: "json",
+                    data: data,
+                    beforeSend: function () {
+                        $.modal.loading("正在处理中，请稍后...");
+                        $.modal.disable();
+                    },
+                    success: function(result) {
+                        if (typeof callback == "function") {
+                            callback(result);
+                        }
+                        $.operate.successCallback4NotClose(result);
+                    }
+                };
+                $.ajax(config)
+            },
             // 保存信息 弹出提示框
             saveModal: function(url, data, callback) {
             	var config = {
@@ -1193,6 +1215,7 @@ var table = {
             },
             // 成功回调执行事件（父窗体静默更新）
             successCallback: function(result) {
+                debugger;
                 if (result.code == web_status.SUCCESS) {
                     var parent = window.parent;
                     if (parent.table.options.type == table_type.bootstrapTable) {
@@ -1214,9 +1237,37 @@ var table = {
                 $.modal.closeLoading();
                 $.modal.enable();
             },
+            // 成功回调执行事件（父窗体静默更新）
+            successCallback4NotClose: function(result) {
+                debugger;
+                if (result.code == web_status.SUCCESS) {
+                    var parent = window.parent;
+                    if (parent.table.options.type == table_type.bootstrapTable) {
+                        // $.modal.close();
+                        // this.focus4Kddh();
+                        $("#input-kddh").val();
+                        $("#input-kddh").focus();
+                        parent.$.modal.msgSuccess(result.msg);
+                        parent.$.table.refresh();
+                    } else if (parent.table.options.type == table_type.bootstrapTreeTable) {
+                        $.modal.close();
+                        parent.$.modal.msgSuccess(result.msg);
+                        parent.$.treeTable.refresh();
+                    } else {
+                        $.modal.msgReload("保存成功,正在刷新数据请稍后……", modal_status.SUCCESS);
+                    }
+                } else if (result.code == web_status.WARNING) {
+                    $.modal.alertWarning(result.msg)
+                }  else {
+                    $.modal.alertError(result.msg);
+                }
+                $.modal.closeLoading();
+                $.modal.enable();
+            },
             // 选项卡成功回调执行事件（父窗体静默更新）
             successTabCallback: function(result) {
                 if (result.code == web_status.SUCCESS) {
+                    debugger;
     	            var topWindow = $(window.parent.document);
     	            var currentId = $('.page-tabs-content', topWindow).find('.active').attr('data-panel');
     	            var $contentWindow = $('.RuoYi_iframe[data-id="' + currentId + '"]', topWindow)[0].contentWindow;

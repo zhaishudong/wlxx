@@ -1,6 +1,11 @@
 package com.ruoyi.project.system.ckjl.service.impl;
 
+import java.util.Date;
 import java.util.List;
+
+import com.ruoyi.common.exception.BusinessException;
+import com.ruoyi.project.system.rkjl.domain.RkRkjl;
+import com.ruoyi.project.system.rkjl.mapper.RkRkjlMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.project.system.ckjl.mapper.CkCkjlMapper;
@@ -19,6 +24,9 @@ public class CkCkjlServiceImpl implements ICkCkjlService
 {
     @Autowired
     private CkCkjlMapper ckCkjlMapper;
+
+    @Autowired
+    private RkRkjlMapper rkRkjlMapper;
 
     /**
      * 查询ckjlFunction
@@ -53,6 +61,22 @@ public class CkCkjlServiceImpl implements ICkCkjlService
     @Override
     public int insertCkCkjl(CkCkjl ckCkjl)
     {
+        //查询入库记录
+        RkRkjl rkjl = new RkRkjl();
+        rkjl.setKDDH(ckCkjl.getCKDH());
+        List<RkRkjl> listrk = rkRkjlMapper.selectRkRkjlList(rkjl);
+        Long rkxh = listrk.get(0).getRKXH();
+        //插入出库其他字段
+
+        //查询是已否出库
+        List<CkCkjl> listck = ckCkjlMapper.selectCkCkjlList(ckCkjl);
+        if (listck.size() > 0)
+        {
+            throw new BusinessException("单号已出库（"+ckCkjl.getCKDH()+"），请勿重复操作！");
+        }
+        ckCkjl.setCKRQ(new Date());
+        ckCkjl.setRKGL(rkxh);
+        ckCkjl.setCKDH(ckCkjl.getCKDH().trim());
         return ckCkjlMapper.insertCkCkjl(ckCkjl);
     }
 

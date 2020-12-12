@@ -29,11 +29,11 @@ public class CkCkjl extends BaseEntity
     private String QTXX;
 
     /** 出库日期 */
-    @Excel(name = "出库日期", width = 30, dateFormat = "yyyy-MM-dd")
+    @Excel(name = "出库日期", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date CKRQ;
 
     /** 出库关联，对应rk_rkjl的rkxh */
-    @Excel(name = "出库关联，对应rk_rkjl的rkxh")
+    @Excel(name = "出库关联")
     private Long RKGL;
 
     public void setCKXH(Long CKXH)
