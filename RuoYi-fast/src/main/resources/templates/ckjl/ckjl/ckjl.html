@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('ckjlFunction列表')" />
+    <th:block th:include="include :: header('出库单')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -10,13 +10,13 @@
                 <form id="formId">
                     <div class="select-list">
                         <ul>
-<!--                            <li>-->
-<!--                                <label>出库序号：</label>-->
-<!--                                <input type="text" name="CKXH"/>-->
-<!--                            </li>-->
                             <li>
                                 <label>出库单号：</label>
                                 <input type="text" name="CKDH"/>
+                            </li>
+                            <li>
+                                <label>快递种类：</label>
+                                <input type="text" name="KDZL"/>
                             </li>
                             <li>
                                 <label>其他信息：</label>
@@ -81,6 +81,10 @@
                     field: 'ckxh',
                     title: '出库序号',
                     visible: false
+                },
+                {
+                    field: 'kdzl',
+                    title: '快递种类'
                 },
                 {
                     field: 'ckdh',

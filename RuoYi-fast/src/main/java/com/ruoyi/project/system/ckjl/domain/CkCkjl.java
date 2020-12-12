@@ -17,8 +17,12 @@ public class CkCkjl extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 出库序号 */
-    @Excel(name = "出库序号")
+//    @Excel(name = "出库序号")
     private Long CKXH;
+
+    /** 快递种类 */
+    @Excel(name = "快递种类")
+    private String KDZL;
 
     /** 出库单号 */
     @Excel(name = "出库单号")
@@ -82,6 +86,14 @@ public class CkCkjl extends BaseEntity
         return RKGL;
     }
 
+    public String getKDZL() {
+        return KDZL;
+    }
+
+    public void setKDZL(String KDZL) {
+        this.KDZL = KDZL;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -90,6 +102,7 @@ public class CkCkjl extends BaseEntity
             .append("QTXX", getQTXX())
             .append("CKRQ", getCKRQ())
             .append("RKGL", getRKGL())
+            .append("KDZL", getKDZL())
             .toString();
     }
 }

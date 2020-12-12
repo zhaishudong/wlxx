@@ -83,6 +83,7 @@ public class RkRkjlServiceImpl implements IRkRkjlService
             throw new BusinessException("快递种类分析失败，请确认是否是有效的快递单号");
         }
         rkRkjl.setKDDH(KDDH);
+        rkRkjl.setKDZL(KDZL);
         return rkRkjlMapper.insertRkRkjl(rkRkjl);
     }
 

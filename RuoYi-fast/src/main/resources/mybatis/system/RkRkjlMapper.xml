@@ -9,10 +9,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="KDDH"    column="KDDH"    />
         <result property="QTXX"    column="QTXX"    />
         <result property="RKRQ"    column="RKRQ"    />
+        <result property="KDZL"    column="KDZL"    />
     </resultMap>
 
     <sql id="selectRkRkjlVo">
-        select RKXH, KDDH, QTXX, RKRQ from rk_rkjl
+        select RKXH, KDDH, QTXX, RKRQ, KDZL from rk_rkjl
     </sql>
 
     <select id="selectRkRkjlList" parameterType="RkRkjl" resultMap="RkRkjlResult">
@@ -21,6 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="RKXH != null "> and RKXH = #{RKXH}</if>
             <if test="KDDH != null  and KDDH != ''"> and KDDH = #{KDDH}</if>
             <if test="QTXX != null  and QTXX != ''"> and QTXX = #{QTXX}</if>
+            <if test="KDZL != null  and KDZL != ''"> and KDZL = #{KDZL}</if>
             <if test="RKRQ != null "> and RKRQ = #{RKRQ}</if>
         </where>
     </select>
@@ -31,6 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="RKXH != null "> and RKXH = #{RKXH}</if>
             <if test="KDDH != null  and KDDH != ''"> and KDDH like "%"#{KDDH}</if>
             <if test="QTXX != null  and QTXX != ''"> and QTXX = #{QTXX}</if>
+            <if test="KDZL != null  and KDZL != ''"> and KDZL = #{KDZL}</if>
             <if test="RKRQ != null "> and RKRQ = #{RKRQ}</if>
         </where>
     </select>
@@ -45,11 +48,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="KDDH != null and KDDH != ''">KDDH,</if>
             <if test="QTXX != null">QTXX,</if>
+            <if test="KDZL != null">KDZL,</if>
             <if test="RKRQ != null">RKRQ,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="KDDH != null and KDDH != ''">#{KDDH},</if>
             <if test="QTXX != null">#{QTXX},</if>
+            <if test="KDZL != null">#{KDZL},</if>
             <if test="RKRQ != null">#{RKRQ},</if>
          </trim>
     </insert>

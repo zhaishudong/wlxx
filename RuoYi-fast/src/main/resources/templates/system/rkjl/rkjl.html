@@ -10,13 +10,13 @@
                 <form id="formId">
                     <div class="select-list">
                         <ul>
-<!--                            <li>-->
-<!--                                <label>入库序号：</label>-->
-<!--                                <input type="text" name="RKXH"/>-->
-<!--                            </li>-->
                             <li>
                                 <label>快递单号：</label>
                                 <input type="text" name="KDDH"/>
+                            </li>
+                            <li>
+                                <label>快递种类：</label>
+                                <input type="text" name="KDZL"/>
                             </li>
                             <li>
                                 <label>其他信息：</label>
@@ -77,6 +77,10 @@
                     field: 'rkxh',
                     title: '入库序号',
                     visible: false
+                },
+                {
+                    field: 'kdzl',
+                    title: '快递种类'
                 },
                 {
                     field: 'kddh',

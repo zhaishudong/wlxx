@@ -86,6 +86,7 @@ public class CkCkjlServiceImpl implements ICkCkjlService
         //插入出库其他字段
         ckCkjl.setCKRQ(new Date());
         ckCkjl.setRKGL(rkxh);
+        ckCkjl.setKDZL(listrk.get(0).getKDZL());
         ckCkjl.setCKDH(ckCkjl.getCKDH().trim());
         return ckCkjlMapper.insertCkCkjl(ckCkjl);
     }

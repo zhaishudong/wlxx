@@ -10,10 +10,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="QTXX"    column="QTXX"    />
         <result property="CKRQ"    column="CKRQ"    />
         <result property="RKGL"    column="RKGL"    />
+        <result property="KDZL"    column="KDZL"    />
     </resultMap>
 
     <sql id="selectCkCkjlVo">
-        select CKXH, CKDH, QTXX, CKRQ, RKGL from ck_ckjl
+        select CKXH, CKDH, QTXX, CKRQ, RKGL, KDZL from ck_ckjl
     </sql>
 
     <select id="selectCkCkjlList" parameterType="CkCkjl" resultMap="CkCkjlResult">
@@ -22,6 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="CKXH != null "> and CKXH = #{CKXH}</if>
             <if test="CKDH != null  and CKDH != ''"> and CKDH = #{CKDH}</if>
             <if test="QTXX != null  and QTXX != ''"> and QTXX = #{QTXX}</if>
+            <if test="KDZL != null  and KDZL != ''"> and KDZL = #{KDZL}</if>
             <if test="CKRQ != null "> and CKRQ &gt;= #{CKRQ}</if>
             <if test="RKGL != null "> and RKGL = #{RKGL}</if>
         </where>
@@ -33,6 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="CKXH != null "> and CKXH = #{CKXH}</if>
             <if test="CKDH != null  and CKDH != ''"> and CKDH like "%"#{CKDH}</if>
             <if test="QTXX != null  and QTXX != ''"> and QTXX = #{QTXX}</if>
+            <if test="KDZL != null  and KDZL != ''"> and KDZL = #{KDZL}</if>
             <if test="CKRQ != null "> and CKRQ &gt;= #{CKRQ}</if>
             <if test="RKGL != null "> and RKGL = #{RKGL}</if>
         </where>
@@ -50,12 +53,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="CKDH != null and CKDH != ''">CKDH,</if>
             <if test="QTXX != null">QTXX,</if>
+            <if test="KDZL != null">KDZL,</if>
             <if test="CKRQ != null">CKRQ,</if>
             <if test="RKGL != null">RKGL,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="CKDH != null and CKDH != ''">#{CKDH},</if>
             <if test="QTXX != null">#{QTXX},</if>
+            <if test="KDZL != null">#{KDZL},</if>
             <if test="CKRQ != null">#{CKRQ},</if>
             <if test="RKGL != null">#{RKGL},</if>
          </trim>

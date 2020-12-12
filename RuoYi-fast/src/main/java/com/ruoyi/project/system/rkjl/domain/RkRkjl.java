@@ -19,6 +19,10 @@ public class RkRkjl extends BaseEntity
     /** 入库序号 */
     private Long RKXH;
 
+    /** 快递种类 */
+    @Excel(name = "快递种类")
+    private String KDZL;
+
     /** 快递单号 */
     @Excel(name = "快递单号")
     private String KDDH;
@@ -26,12 +30,6 @@ public class RkRkjl extends BaseEntity
     /** 其他信息 */
     @Excel(name = "其他信息")
     private String QTXX;
-
-
-
-    /** 快递种类 */
-    @Excel(name = "快递种类")
-    private String KDZL;
 
     /** 入库日期 */
     @Excel(name = "入库日期", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
