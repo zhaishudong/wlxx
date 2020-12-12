@@ -3,8 +3,10 @@ package com.ruoyi.project.system.rkjl.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import com.alibaba.fastjson.JSONObject;
 import com.ruoyi.common.exception.BusinessException;
-import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.project.common.KdApiOrderDistinguish;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.project.system.rkjl.mapper.RkRkjlMapper;
@@ -23,6 +25,9 @@ public class RkRkjlServiceImpl implements IRkRkjlService
 {
     @Autowired
     private RkRkjlMapper rkRkjlMapper;
+
+    @Autowired
+    private KdApiOrderDistinguish kdApiOrderDistinguish;
 
     /**
      * 查询入库
@@ -45,7 +50,12 @@ public class RkRkjlServiceImpl implements IRkRkjlService
     @Override
     public List<RkRkjl> selectRkRkjlList(RkRkjl rkRkjl)
     {
-        return rkRkjlMapper.selectRkRkjlList(rkRkjl);
+        String kddh = rkRkjl.getKDDH();
+        if (StringUtils.isNotBlank(kddh) && kddh.length()>4){
+            return rkRkjlMapper.selectRkRkjlList(rkRkjl);
+        }else {
+            return rkRkjlMapper.selectRkRkjlListBykddh(rkRkjl);
+        }
     }
 
     /**
@@ -64,8 +74,15 @@ public class RkRkjlServiceImpl implements IRkRkjlService
         {
             throw new BusinessException("单号重复（"+rkRkjl.getKDDH()+"），请检查是否是同一个快递单号！");
         }
+        String KDDH = rkRkjl.getKDDH().trim();
         rkRkjl.setRKRQ(new Date());
-        rkRkjl.setKDDH(rkRkjl.getKDDH().trim());
+        String KDZL = "";
+        try {
+            KDZL = kdApiOrderDistinguish.getOrderTracesByJson(KDDH);
+        } catch (Exception e) {
+            throw new BusinessException("快递种类分析失败，请确认是否是有效的快递单号");
+        }
+        rkRkjl.setKDDH(KDDH);
         return rkRkjlMapper.insertRkRkjl(rkRkjl);
     }
 

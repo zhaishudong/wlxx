@@ -27,6 +27,12 @@ public class RkRkjl extends BaseEntity
     @Excel(name = "其他信息")
     private String QTXX;
 
+
+
+    /** 快递种类 */
+    @Excel(name = "快递种类")
+    private String KDZL;
+
     /** 入库日期 */
     @Excel(name = "入库日期", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date RKRQ;
@@ -68,6 +74,14 @@ public class RkRkjl extends BaseEntity
         return RKRQ;
     }
 
+    public String getKDZL() {
+        return KDZL;
+    }
+
+    public void setKDZL(String KDZL) {
+        this.KDZL = KDZL;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -75,6 +89,7 @@ public class RkRkjl extends BaseEntity
             .append("KDDH", getKDDH())
             .append("QTXX", getQTXX())
             .append("RKRQ", getRKRQ())
+            .append("KDZL", getKDZL())
             .toString();
     }
 }

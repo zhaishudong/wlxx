@@ -24,6 +24,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="RKRQ != null "> and RKRQ = #{RKRQ}</if>
         </where>
     </select>
+
+    <select id="selectRkRkjlListBykddh" parameterType="RkRkjl" resultMap="RkRkjlResult">
+        <include refid="selectRkRkjlVo"/>
+        <where>
+            <if test="RKXH != null "> and RKXH = #{RKXH}</if>
+            <if test="KDDH != null  and KDDH != ''"> and KDDH like "%"#{KDDH}</if>
+            <if test="QTXX != null  and QTXX != ''"> and QTXX = #{QTXX}</if>
+            <if test="RKRQ != null "> and RKRQ = #{RKRQ}</if>
+        </where>
+    </select>
     
     <select id="selectRkRkjlById" parameterType="Long" resultMap="RkRkjlResult">
         <include refid="selectRkRkjlVo"/>

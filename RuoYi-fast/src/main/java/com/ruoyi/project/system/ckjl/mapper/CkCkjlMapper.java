@@ -27,6 +27,9 @@ public interface CkCkjlMapper
      */
     public List<CkCkjl> selectCkCkjlList(CkCkjl ckCkjl);
 
+    public List<CkCkjl> selectCkCkjlListBykddh(CkCkjl ckCkjl);
+
+
     /**
      * 新增ckjlFunction
      * 

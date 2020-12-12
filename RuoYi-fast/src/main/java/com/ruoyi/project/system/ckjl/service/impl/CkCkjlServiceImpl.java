@@ -6,6 +6,7 @@ import java.util.List;
 import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.project.system.rkjl.domain.RkRkjl;
 import com.ruoyi.project.system.rkjl.mapper.RkRkjlMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.project.system.ckjl.mapper.CkCkjlMapper;
@@ -49,7 +50,13 @@ public class CkCkjlServiceImpl implements ICkCkjlService
     @Override
     public List<CkCkjl> selectCkCkjlList(CkCkjl ckCkjl)
     {
-        return ckCkjlMapper.selectCkCkjlList(ckCkjl);
+
+        String ckdh = ckCkjl.getCKDH();
+        if (StringUtils.isNotBlank(ckdh) && ckdh.length()>4){
+            return ckCkjlMapper.selectCkCkjlList(ckCkjl);
+        }else {
+            return ckCkjlMapper.selectCkCkjlListBykddh(ckCkjl);
+        }
     }
 
     /**
@@ -61,19 +68,22 @@ public class CkCkjlServiceImpl implements ICkCkjlService
     @Override
     public int insertCkCkjl(CkCkjl ckCkjl)
     {
-        //查询入库记录
-        RkRkjl rkjl = new RkRkjl();
-        rkjl.setKDDH(ckCkjl.getCKDH());
-        List<RkRkjl> listrk = rkRkjlMapper.selectRkRkjlList(rkjl);
-        Long rkxh = listrk.get(0).getRKXH();
-        //插入出库其他字段
-
         //查询是已否出库
         List<CkCkjl> listck = ckCkjlMapper.selectCkCkjlList(ckCkjl);
         if (listck.size() > 0)
         {
             throw new BusinessException("单号已出库（"+ckCkjl.getCKDH()+"），请勿重复操作！");
         }
+        //查询入库记录
+        RkRkjl rkjl = new RkRkjl();
+        rkjl.setKDDH(ckCkjl.getCKDH());
+        List<RkRkjl> listrk = rkRkjlMapper.selectRkRkjlList(rkjl);
+        if (listrk.size() <= 0)
+        {
+            throw new BusinessException("单号（"+ckCkjl.getCKDH()+"），未入库，请先入库！");
+        }
+        Long rkxh = listrk.get(0).getRKXH();
+        //插入出库其他字段
         ckCkjl.setCKRQ(new Date());
         ckCkjl.setRKGL(rkxh);
         ckCkjl.setCKDH(ckCkjl.getCKDH().trim());

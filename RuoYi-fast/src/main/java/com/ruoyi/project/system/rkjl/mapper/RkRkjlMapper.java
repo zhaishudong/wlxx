@@ -27,6 +27,10 @@ public interface RkRkjlMapper
      */
     public List<RkRkjl> selectRkRkjlList(RkRkjl rkRkjl);
 
+    public List<RkRkjl> selectRkRkjlListBykddh(RkRkjl rkRkjl);
+
+
+
     /**
      * 新增入库
      * 
