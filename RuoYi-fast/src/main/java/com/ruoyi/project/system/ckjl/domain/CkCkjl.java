@@ -40,6 +40,10 @@ public class CkCkjl extends BaseEntity
     @Excel(name = "出库关联")
     private Long RKGL;
 
+    private String BEGINCKRQ;
+
+    private String ENDCKRQ;
+
     public void setCKXH(Long CKXH)
     {
         this.CKXH = CKXH;
@@ -49,6 +53,23 @@ public class CkCkjl extends BaseEntity
     {
         return CKXH;
     }
+
+    public String getBeginCKRQ() {
+        return BEGINCKRQ;
+    }
+
+    public void setBeginCKRQ(String beginCKRQ) {
+        this.BEGINCKRQ = beginCKRQ;
+    }
+
+    public String getEndCKRQ() {
+        return ENDCKRQ;
+    }
+
+    public void setEndCKRQ(String endCKRQ) {
+        this.ENDCKRQ = endCKRQ;
+    }
+
     public void setCKDH(String CKDH)
     {
         this.CKDH = CKDH;
@@ -103,6 +124,8 @@ public class CkCkjl extends BaseEntity
             .append("CKRQ", getCKRQ())
             .append("RKGL", getRKGL())
             .append("KDZL", getKDZL())
+            .append("BEGINCKRQ", getBeginCKRQ())
+            .append("ENDCKRQ", getEndCKRQ())
             .toString();
     }
 }

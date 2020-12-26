@@ -1,7 +1,10 @@
 package com.ruoyi.project.system.rkjl.mapper;
 
 import java.util.List;
+
+import com.ruoyi.project.system.ckjl.domain.CkCkjlByGroup;
 import com.ruoyi.project.system.rkjl.domain.RkRkjl;
+import com.ruoyi.project.system.rkjl.domain.RkRkjlByGroup;
 
 /**
  * 入库Mapper接口
@@ -27,9 +30,21 @@ public interface RkRkjlMapper
      */
     public List<RkRkjl> selectRkRkjlList(RkRkjl rkRkjl);
 
+    /**
+     * 查询入库列表
+     *
+     * @param rkRkjl 入库
+     * @return 入库集合
+     */
+    public List<RkRkjlByGroup> selectRkRkjlListByGroup(RkRkjl rkRkjl);
+
+    /**
+     * 查询入库列表
+     *
+     * @param rkRkjl 入库
+     * @return 入库集合
+     */
     public List<RkRkjl> selectRkRkjlListBykddh(RkRkjl rkRkjl);
-
-
 
     /**
      * 新增入库
@@ -46,6 +61,14 @@ public interface RkRkjlMapper
      * @return 结果
      */
     public int updateRkRkjl(RkRkjl rkRkjl);
+
+    /**
+     * 修改入库
+     *
+     * @param CRPB 入库
+     * @return 结果
+     */
+    public int updateRkRkjl4CRPB(Long RKXH);
 
     /**
      * 删除入库

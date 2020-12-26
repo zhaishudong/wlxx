@@ -12,6 +12,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="KDZL"    column="KDZL"    />
     </resultMap>
 
+    <resultMap type="RkRkjlByGroup" id="RkRkjlByGroupResult">
+        <result property="KDZL"    column="KDZL"    />
+        <result property="HZSL"    column="HZSL"    />
+    </resultMap>
+
     <sql id="selectRkRkjlVo">
         select RKXH, KDDH, QTXX, RKRQ, KDZL from rk_rkjl
     </sql>
@@ -23,9 +28,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="KDDH != null  and KDDH != ''"> and KDDH = #{KDDH}</if>
             <if test="QTXX != null  and QTXX != ''"> and QTXX = #{QTXX}</if>
             <if test="KDZL != null  and KDZL != ''"> and KDZL = #{KDZL}</if>
-            <if test="RKRQ != null "> and RKRQ = #{RKRQ}</if>
+            <if test="BEGINRKRQ != null  and BEGINRKRQ != ''"> and RKRQ &gt; #{BEGINRKRQ}</if>
+            <if test="ENDRKRQ != null  and ENDRKRQ != ''"> and RKRQ &lt; #{ENDRKRQ}</if>
+             and CRPB='1'
         </where>
     </select>
+
+    <select id="selectRkRkjlListByGroup" parameterType="RkRkjl" resultMap="RkRkjlByGroupResult">
+        select a.KDZL as KDZL,sum(1) as HZSL  from rk_rkjl a
+        <where>
+            <if test="BEGINRKRQ != null  and BEGINRKRQ != ''"> and a.RKRQ &gt; #{BEGINRKRQ}</if>
+            <if test="ENDRKRQ != null  and ENDRKRQ != ''"> and a.RKRQ &lt; #{ENDRKRQ}</if>
+        </where>
+        GROUP BY KDZL
+    </select>
+
 
     <select id="selectRkRkjlListBykddh" parameterType="RkRkjl" resultMap="RkRkjlResult">
         <include refid="selectRkRkjlVo"/>
@@ -34,13 +51,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="KDDH != null  and KDDH != ''"> and KDDH like "%"#{KDDH}</if>
             <if test="QTXX != null  and QTXX != ''"> and QTXX = #{QTXX}</if>
             <if test="KDZL != null  and KDZL != ''"> and KDZL = #{KDZL}</if>
-            <if test="RKRQ != null "> and RKRQ = #{RKRQ}</if>
+            <if test="BEGINRKRQ != null  and BEGINRKRQ != ''"> and RKRQ &gt; #{BEGINRKRQ}</if>
+            <if test="ENDRKRQ != null  and ENDRKRQ != ''"> and RKRQ &lt; #{ENDRKRQ}</if>
+             and CRPB='1'
         </where>
     </select>
     
     <select id="selectRkRkjlById" parameterType="Long" resultMap="RkRkjlResult">
         <include refid="selectRkRkjlVo"/>
-        where RKXH = #{RKXH}
+        where RKXH = #{RKXH} and CRPB='1'
     </select>
         
     <insert id="insertRkRkjl" parameterType="RkRkjl" useGeneratedKeys="true" keyProperty="RKXH">
@@ -65,6 +84,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="KDDH != null and KDDH != ''">KDDH = #{KDDH},</if>
             <if test="QTXX != null">QTXX = #{QTXX},</if>
             <if test="RKRQ != null">RKRQ = #{RKRQ},</if>
+        </trim>
+        where RKXH = #{RKXH}
+    </update>
+
+    <update id="updateRkRkjl4CRPB" parameterType="Long">
+        update rk_rkjl
+        <trim prefix="SET" suffixOverrides=",">
+            CRPB = '2'
         </trim>
         where RKXH = #{RKXH}
     </update>

@@ -1,9 +1,12 @@
 package com.ruoyi.project.system.ckjl.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import com.ruoyi.common.exception.BusinessException;
+import com.ruoyi.common.utils.text.StrEmpty;
+import com.ruoyi.project.system.ckjl.domain.CkCkjlByGroup;
 import com.ruoyi.project.system.rkjl.domain.RkRkjl;
 import com.ruoyi.project.system.rkjl.mapper.RkRkjlMapper;
 import org.apache.commons.lang3.StringUtils;
@@ -50,13 +53,34 @@ public class CkCkjlServiceImpl implements ICkCkjlService
     @Override
     public List<CkCkjl> selectCkCkjlList(CkCkjl ckCkjl)
     {
-
+        String bgDate = (ckCkjl.getParams().get("beginCKRQ")+"");
+        String endDate = (ckCkjl.getParams().get("endCKRQ")+"");
+        if (StrEmpty.isNull(bgDate) && StrEmpty.isNull(endDate)){
+            SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
+            Date date = new Date();
+            bgDate = sdf.format(date);
+            endDate = sdf.format(StrEmpty.dateAddOne(date));
+        }
+        ckCkjl.setBeginCKRQ(bgDate);
+        ckCkjl.setEndCKRQ(endDate);
         String ckdh = ckCkjl.getCKDH();
         if (StringUtils.isNotBlank(ckdh) && ckdh.length()>4){
             return ckCkjlMapper.selectCkCkjlList(ckCkjl);
         }else {
             return ckCkjlMapper.selectCkCkjlListBykddh(ckCkjl);
         }
+    }
+
+    /**
+     * 查询ckjlFunction列表
+     *
+     * @param ckCkjl ckjlFunction
+     * @return ckjlFunction
+     */
+    @Override
+    public List<CkCkjlByGroup> selectCkCkjlListByGroup(CkCkjl ckCkjl)
+    {
+            return ckCkjlMapper.selectCkCkjlListByGroup(ckCkjl);
     }
 
     /**
@@ -88,7 +112,11 @@ public class CkCkjlServiceImpl implements ICkCkjlService
         ckCkjl.setRKGL(rkxh);
         ckCkjl.setKDZL(listrk.get(0).getKDZL());
         ckCkjl.setCKDH(ckCkjl.getCKDH().trim());
-        return ckCkjlMapper.insertCkCkjl(ckCkjl);
+        int i = ckCkjlMapper.insertCkCkjl(ckCkjl);
+        if(i>0){
+            rkRkjlMapper.updateRkRkjl4CRPB(listrk.get(0).getRKXH());
+        }
+        return i;
     }
 
     /**

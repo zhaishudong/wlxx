@@ -1,26 +1,21 @@
 package com.ruoyi.project.system.rkjl.controller;
 
-import java.util.List;
-
-import com.ruoyi.project.system.ckjl.domain.CkCkjlByGroup;
+import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.framework.aspectj.lang.annotation.Log;
+import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
+import com.ruoyi.framework.web.controller.BaseController;
+import com.ruoyi.framework.web.domain.AjaxResult;
+import com.ruoyi.framework.web.page.TableDataInfo;
+import com.ruoyi.project.system.rkjl.domain.RkRkjl;
 import com.ruoyi.project.system.rkjl.domain.RkRkjlByGroup;
+import com.ruoyi.project.system.rkjl.service.IRkRkjlService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import com.ruoyi.framework.aspectj.lang.annotation.Log;
-import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
-import com.ruoyi.project.system.rkjl.domain.RkRkjl;
-import com.ruoyi.project.system.rkjl.service.IRkRkjlService;
-import com.ruoyi.framework.web.controller.BaseController;
-import com.ruoyi.framework.web.domain.AjaxResult;
-import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.framework.web.page.TableDataInfo;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 入库Controller
@@ -29,26 +24,25 @@ import com.ruoyi.framework.web.page.TableDataInfo;
  * @date 2020-12-05
  */
 @Controller
-@RequestMapping("/system/rkjl")
-public class RkRkjlController extends BaseController
+@RequestMapping("/kdhz/hzd")
+public class RkRkjl4TJController extends BaseController
 {
-    private String prefix = "system/rkjl";
+    private String prefix = "kdhz/hzd";
 
     @Autowired
     private IRkRkjlService rkRkjlService;
 
-    @RequiresPermissions("system:rkjl:view")
+    @RequiresPermissions("kdhz:hzd:view")
     @GetMapping()
     public String rkjl()
     {
-        String sd = prefix + "/rkjl";
         return prefix + "/rkjl";
     }
 
     /**
      * 查询入库列表
      */
-    @RequiresPermissions("system:rkjl:list")
+    @RequiresPermissions("kdhz:hzd:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(RkRkjl rkRkjl)
@@ -61,7 +55,7 @@ public class RkRkjlController extends BaseController
     /**
      * 查询入库列表
      */
-    @RequiresPermissions("system:rkjl:list")
+    @RequiresPermissions("kdhz:hzd:list")
     @PostMapping("/list/group")
     @ResponseBody
     public TableDataInfo listGroup(RkRkjl rkRkjl)
@@ -74,13 +68,13 @@ public class RkRkjlController extends BaseController
     /**
      * 导出入库列表
      */
-    @RequiresPermissions("system:rkjl:export")
+    @RequiresPermissions("kdhz:hzd:export")
     @Log(title = "入库", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
     public AjaxResult export(RkRkjl rkRkjl)
     {
-        List<RkRkjl> list = rkRkjlService.selectRkRkjlList(rkRkjl);
+        List<RkRkjl> list = rkRkjlService.selectRkRkjlListByReprot(rkRkjl);
         ExcelUtil<RkRkjl> util = new ExcelUtil<RkRkjl>(RkRkjl.class);
         return util.exportExcel(list, "rkjl");
     }
@@ -97,7 +91,7 @@ public class RkRkjlController extends BaseController
     /**
      * 新增保存入库
      */
-    @RequiresPermissions("system:rkjl:add")
+    @RequiresPermissions("kdhz:hzd:add")
     @Log(title = "入库", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -120,7 +114,7 @@ public class RkRkjlController extends BaseController
     /**
      * 修改保存入库
      */
-    @RequiresPermissions("system:rkjl:edit")
+    @RequiresPermissions("kdhz:hzd:edit")
     @Log(title = "入库", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
@@ -132,7 +126,7 @@ public class RkRkjlController extends BaseController
     /**
      * 删除入库
      */
-    @RequiresPermissions("system:rkjl:remove")
+    @RequiresPermissions("kdhz:hzd:remove")
     @Log(title = "入库", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")
     @ResponseBody

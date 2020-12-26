@@ -1,6 +1,8 @@
 package com.ruoyi.project.system.ckjl.controller;
 
 import java.util.List;
+
+import com.ruoyi.project.system.ckjl.domain.CkCkjlByGroup;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,6 +53,19 @@ public class CkCkjlController extends BaseController
     {
         startPage();
         List<CkCkjl> list = ckCkjlService.selectCkCkjlList(ckCkjl);
+        return getDataTable(list);
+    }
+
+    /**
+     * 查询ckjlFunction列表
+     */
+    @RequiresPermissions("ckjl:ckjl:list")
+    @PostMapping("/list/group")
+    @ResponseBody
+    public TableDataInfo listGroup(CkCkjl ckCkjl)
+    {
+        startPage();
+        List<CkCkjlByGroup> list = ckCkjlService.selectCkCkjlListByGroup(ckCkjl);
         return getDataTable(list);
     }
 

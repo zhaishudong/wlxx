@@ -1,7 +1,10 @@
 package com.ruoyi.project.system.rkjl.service;
 
 import java.util.List;
+
+import com.ruoyi.project.system.ckjl.domain.CkCkjlByGroup;
 import com.ruoyi.project.system.rkjl.domain.RkRkjl;
+import com.ruoyi.project.system.rkjl.domain.RkRkjlByGroup;
 
 /**
  * 入库Service接口
@@ -26,6 +29,22 @@ public interface IRkRkjlService
      * @return 入库集合
      */
     public List<RkRkjl> selectRkRkjlList(RkRkjl rkRkjl);
+
+    /**
+     * 查询入库列表
+     *
+     * @param rkRkjl 入库
+     * @return 入库集合
+     */
+    public List<RkRkjl> selectRkRkjlListByReprot(RkRkjl rkRkjl);
+
+    /**
+     * 查询入库列表
+     *
+     * @param rkRkjl 入库
+     * @return 入库集合
+     */
+    public List<RkRkjlByGroup> selectRkRkjlListByGroup(RkRkjl rkRkjl);
 
     /**
      * 新增入库

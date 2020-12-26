@@ -27,6 +27,10 @@ public class RkRkjl extends BaseEntity
     @Excel(name = "快递单号")
     private String KDDH;
 
+    /** 汇总数量 */
+    @Excel(name = "汇总数量")
+    private String HZSL;
+
     /** 其他信息 */
     @Excel(name = "其他信息")
     private String QTXX;
@@ -34,6 +38,10 @@ public class RkRkjl extends BaseEntity
     /** 入库日期 */
     @Excel(name = "入库日期", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date RKRQ;
+
+    private String BEGINRKRQ;
+
+    private String ENDRKRQ;
 
     public void setRKXH(Long RKXH)
     {
@@ -80,6 +88,31 @@ public class RkRkjl extends BaseEntity
         this.KDZL = KDZL;
     }
 
+    public String getBeginRKRQ() {
+        return BEGINRKRQ;
+    }
+
+    public void setBeginRKRQ(String beginRKRQ) {
+        this.BEGINRKRQ = beginRKRQ;
+    }
+
+    public String getEndRKRQ() {
+        return ENDRKRQ;
+    }
+
+    public void setEndRKRQ(String endRKRQ) {
+        this.ENDRKRQ = endRKRQ;
+    }
+
+    public String getHZSL() {
+        return HZSL;
+    }
+
+    public void setHZSL(String HZSL) {
+        this.HZSL = HZSL;
+    }
+
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -88,6 +121,9 @@ public class RkRkjl extends BaseEntity
             .append("QTXX", getQTXX())
             .append("RKRQ", getRKRQ())
             .append("KDZL", getKDZL())
+            .append("BEGINRKRQ", getBeginRKRQ())
+            .append("ENDRKRQ", getEndRKRQ())
+            .append("HZSL", getHZSL())
             .toString();
     }
 }

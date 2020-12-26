@@ -72,6 +72,7 @@ var table = {
                     queryParams: $.table.queryParams,
                     rowStyle: {},
                 };
+
             	var options = $.extend(defaults, options);
             	table.options = options;
             	table.config[options.id] = options;
@@ -143,7 +144,9 @@ var table = {
                     exportOptions: options.exportOptions,               // 前端导出忽略列索引
                     detailFormatter: options.detailFormatter,           // 在行下面展示其他数据列表
                 });
+                console.log(options.queryParams);
             },
+
             // 获取实例ID，如存在多个返回#id1,#id2 delimeter分隔符
             getOptionsIds: function(separator) {
             	var _separator = $.common.isEmpty(separator) ? "," : separator;
@@ -164,7 +167,7 @@ var table = {
                     isAsc:          params.order
                 };
             	var currentId = $.common.isEmpty(table.options.formId) ? $('form').attr('id') : table.options.formId;
-            	return $.extend(curParams, $.common.formToJSON(currentId)); 
+                return  $.extend(curParams, $.common.formToJSON(currentId));;
             },
             // 请求获取数据后处理回调函数
             responseHandler: function(res) {
@@ -363,7 +366,8 @@ var table = {
                     $.modal.loading("正在导出数据，请稍后...");
                     $.post(table.options.exportUrl, dataParam, function(result) {
                         if (result.code == web_status.SUCCESS) {
-                            window.location.href = ctx + "common/download?fileName=" + encodeURI(result.msg) + "&delete=" + true;
+                            var sda = ctx + "common/download?fileName=" + result.msg + "&delete=" + true;
+                            window.location.href = sda;
                         } else if (result.code == web_status.WARNING) {
                             $.modal.alertWarning(result.msg)
                         } else {
@@ -620,7 +624,6 @@ var table = {
     	form: {
             // 表单重置
             reset: function(formId, tableId) {
-                debugger;
                 table.set(tableId);
             	var currentId = $.common.isEmpty(formId) ? $('form').attr('id') : formId;
             	$("#" + currentId)[0].reset();
@@ -733,7 +736,6 @@ var table = {
             },
             // 关闭窗体
             close: function (index) {
-                debugger;
                 if($.common.isEmpty(index)){
                     var index = parent.layer.getFrameIndex(window.name);
                     parent.layer.close(index);
@@ -1215,7 +1217,6 @@ var table = {
             },
             // 成功回调执行事件（父窗体静默更新）
             successCallback: function(result) {
-                debugger;
                 if (result.code == web_status.SUCCESS) {
                     var parent = window.parent;
                     if (parent.table.options.type == table_type.bootstrapTable) {
@@ -1239,7 +1240,6 @@ var table = {
             },
             // 成功回调执行事件（父窗体静默更新）
             successCallback4NotClose: function(result) {
-                debugger;
                 if (result.code == web_status.SUCCESS) {
                     var parent = window.parent;
                     if (parent.table.options.type == table_type.bootstrapTable) {
@@ -1267,7 +1267,6 @@ var table = {
             // 选项卡成功回调执行事件（父窗体静默更新）
             successTabCallback: function(result) {
                 if (result.code == web_status.SUCCESS) {
-                    debugger;
     	            var topWindow = $(window.parent.document);
     	            var currentId = $('.page-tabs-content', topWindow).find('.active').attr('data-panel');
     	            var $contentWindow = $('.RuoYi_iframe[data-id="' + currentId + '"]', topWindow)[0].contentWindow;

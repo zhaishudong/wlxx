@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -804,7 +805,9 @@ public class ExcelUtil<T>
      */
     public String encodingFilename(String filename)
     {
-        filename = UUID.randomUUID().toString() + "_" + filename + ".xlsx";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        filename = sdf.format(new Date())+ "_" + filename + ".xlsx";
+//        filename = UUID.randomUUID().toString() + "_" + filename + ".xlsx";
         return filename;
     }
 

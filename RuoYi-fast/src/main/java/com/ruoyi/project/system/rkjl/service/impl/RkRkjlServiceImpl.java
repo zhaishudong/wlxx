@@ -1,11 +1,16 @@
 package com.ruoyi.project.system.rkjl.service.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ruoyi.common.exception.BusinessException;
+import com.ruoyi.common.utils.text.StrEmpty;
 import com.ruoyi.project.common.KdApiOrderDistinguish;
+import com.ruoyi.project.system.ckjl.domain.CkCkjlByGroup;
+import com.ruoyi.project.system.rkjl.domain.RkRkjlByGroup;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,6 +55,16 @@ public class RkRkjlServiceImpl implements IRkRkjlService
     @Override
     public List<RkRkjl> selectRkRkjlList(RkRkjl rkRkjl)
     {
+        String bgDate = (rkRkjl.getParams().get("beginRKRQ")+"");
+        String endDate = (rkRkjl.getParams().get("endRKRQ")+"");
+        if (StrEmpty.isNull(bgDate) && StrEmpty.isNull(endDate)){
+            SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
+            Date date = new Date();
+            bgDate = sdf.format(date);
+            endDate = sdf.format(StrEmpty.dateAddOne(date));
+        }
+        rkRkjl.setBeginRKRQ(bgDate);
+        rkRkjl.setEndRKRQ(endDate);
         String kddh = rkRkjl.getKDDH();
         if (StringUtils.isNotBlank(kddh) && kddh.length()>4){
             return rkRkjlMapper.selectRkRkjlList(rkRkjl);
@@ -57,6 +72,66 @@ public class RkRkjlServiceImpl implements IRkRkjlService
             return rkRkjlMapper.selectRkRkjlListBykddh(rkRkjl);
         }
     }
+
+    /**
+     * 查询入库列表
+     *
+     * @param rkRkjl 入库
+     * @return 入库
+     */
+    @Override
+    public List<RkRkjlByGroup> selectRkRkjlListByGroup(RkRkjl rkRkjl)
+    {
+        String bgDate = (rkRkjl.getParams().get("beginRKRQ")+"");
+        String endDate = (rkRkjl.getParams().get("endRKRQ")+"");
+        if (StrEmpty.isNull(bgDate) && StrEmpty.isNull(endDate)){
+            SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
+            Date date = new Date();
+            bgDate = sdf.format(date);
+            endDate = sdf.format(StrEmpty.dateAddOne(date));
+        }
+        rkRkjl.setBeginRKRQ(bgDate);
+        rkRkjl.setEndRKRQ(endDate);
+        return rkRkjlMapper.selectRkRkjlListByGroup(rkRkjl);
+    }
+
+    /**
+     * 查询入库列表
+     *
+     * @param rkRkjl 入库
+     * @return 入库
+     */
+    @Override
+    public List<RkRkjl> selectRkRkjlListByReprot(RkRkjl rkRkjl)
+    {
+        String bgDate = (rkRkjl.getParams().get("beginRKRQ")+"");
+        String endDate = (rkRkjl.getParams().get("endRKRQ")+"");
+        if (StrEmpty.isNull(bgDate) && StrEmpty.isNull(endDate)){
+            SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
+            Date date = new Date();
+            bgDate = sdf.format(date);
+            endDate = sdf.format(StrEmpty.dateAddOne(date));
+        }
+        rkRkjl.setBeginRKRQ(bgDate);
+        rkRkjl.setEndRKRQ(endDate);
+        String kddh = rkRkjl.getKDDH();
+        List<RkRkjl> rulest_list = new ArrayList<RkRkjl>();
+        //先查询有多少种类快递
+        List<RkRkjlByGroup> rkRkjlByGroups = rkRkjlMapper.selectRkRkjlListByGroup(rkRkjl);
+        //循环查询每种快递的info
+        for (int i = 0; i < rkRkjlByGroups.size(); i++) {
+            RkRkjlByGroup rkRkjlByGroup = rkRkjlByGroups.get(i);
+            rkRkjl.setKDZL(rkRkjlByGroup.getKDZL());
+            rulest_list.addAll(rkRkjlMapper.selectRkRkjlList(rkRkjl));
+            RkRkjl rkjl_temp = new RkRkjl();
+            rkjl_temp.setKDZL(rkRkjlByGroup.getKDZL());
+            rkjl_temp.setHZSL(rkRkjlByGroup.getHZSL());
+            rulest_list.add(rkjl_temp);
+        }
+        return rulest_list;
+    }
+
+
 
     /**
      * 新增入库

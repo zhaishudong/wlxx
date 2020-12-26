@@ -2,6 +2,7 @@ package com.ruoyi.project.system.ckjl.mapper;
 
 import java.util.List;
 import com.ruoyi.project.system.ckjl.domain.CkCkjl;
+import com.ruoyi.project.system.ckjl.domain.CkCkjlByGroup;
 
 /**
  * ckjlFunctionMapper接口
@@ -27,7 +28,22 @@ public interface CkCkjlMapper
      */
     public List<CkCkjl> selectCkCkjlList(CkCkjl ckCkjl);
 
+    /**
+     * 查询ckjlFunction列表
+     *
+     * @param ckCkjl ckjlFunction
+     * @return ckjlFunction集合
+     */
     public List<CkCkjl> selectCkCkjlListBykddh(CkCkjl ckCkjl);
+
+    /**
+     * 查询ckjlFunction列表
+     *
+     * @param ckCkjl ckjlFunction
+     * @return ckjlFunction集合
+     */
+    public List<CkCkjlByGroup> selectCkCkjlListByGroup(CkCkjl ckCkjl);
+
 
 
     /**

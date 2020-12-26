@@ -13,6 +13,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="KDZL"    column="KDZL"    />
     </resultMap>
 
+    <resultMap type="CkCkjlByGroup" id="CkCkjlByGroupResult">
+        <result property="CKXH"    column="CKXH"    />
+        <result property="CKDH"    column="CKDH"    />
+        <result property="QTXX"    column="QTXX"    />
+        <result property="CKRQ"    column="CKRQ"    />
+        <result property="RKGL"    column="RKGL"    />
+        <result property="KDZL"    column="KDZL"    />
+    </resultMap>
+
     <sql id="selectCkCkjlVo">
         select CKXH, CKDH, QTXX, CKRQ, RKGL, KDZL from ck_ckjl
     </sql>
@@ -24,8 +33,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="CKDH != null  and CKDH != ''"> and CKDH = #{CKDH}</if>
             <if test="QTXX != null  and QTXX != ''"> and QTXX = #{QTXX}</if>
             <if test="KDZL != null  and KDZL != ''"> and KDZL = #{KDZL}</if>
-            <if test="CKRQ != null "> and CKRQ &gt;= #{CKRQ}</if>
             <if test="RKGL != null "> and RKGL = #{RKGL}</if>
+            <if test="BEGINCKRQ != null  and BEGINCKRQ != ''"> and CKRQ &gt; #{BEGINCKRQ}</if>
+            <if test="ENDCKRQ != null  and ENDCKRQ != ''"> and CKRQ &lt; #{ENDCKRQ}</if>
         </where>
     </select>
 
@@ -36,10 +46,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="CKDH != null  and CKDH != ''"> and CKDH like "%"#{CKDH}</if>
             <if test="QTXX != null  and QTXX != ''"> and QTXX = #{QTXX}</if>
             <if test="KDZL != null  and KDZL != ''"> and KDZL = #{KDZL}</if>
+            <if test="RKGL != null "> and RKGL = #{RKGL}</if>
+            <if test="BEGINCKRQ != null  and BEGINCKRQ != ''"> and CKRQ &gt; #{BEGINCKRQ}</if>
+            <if test="ENDCKRQ != null  and ENDCKRQ != ''"> and CKRQ &lt; #{ENDCKRQ}</if>
+        </where>
+    </select>
+
+    <select id="selectCkCkjlListByGroup" parameterType="CkCkjl" resultMap="CkCkjlByGroupResult">
+        <include refid="selectCkCkjlVo"/>
+        <where>
+            <if test="CKXH != null "> and CKXH = #{CKXH}</if>
+            <if test="CKDH != null  and CKDH != ''"> and CKDH like "%"#{CKDH}</if>
+            <if test="QTXX != null  and QTXX != ''"> and QTXX = #{QTXX}</if>
+            <if test="KDZL != null  and KDZL != ''"> and KDZL = #{KDZL}</if>
             <if test="CKRQ != null "> and CKRQ &gt;= #{CKRQ}</if>
             <if test="RKGL != null "> and RKGL = #{RKGL}</if>
         </where>
     </select>
+
 
 
     
