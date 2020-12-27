@@ -36,6 +36,14 @@ public interface IRkRkjlService
      * @param rkRkjl 入库
      * @return 入库集合
      */
+    public List<RkRkjl> selectRkRkjlListAll(RkRkjl rkRkjl);
+
+    /**
+     * 查询入库列表
+     *
+     * @param rkRkjl 入库
+     * @return 入库集合
+     */
     public List<RkRkjl> selectRkRkjlListByReprot(RkRkjl rkRkjl);
 
     /**

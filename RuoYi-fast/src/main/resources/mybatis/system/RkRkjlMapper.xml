@@ -30,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="KDZL != null  and KDZL != ''"> and KDZL = #{KDZL}</if>
             <if test="BEGINRKRQ != null  and BEGINRKRQ != ''"> and RKRQ &gt; #{BEGINRKRQ}</if>
             <if test="ENDRKRQ != null  and ENDRKRQ != ''"> and RKRQ &lt; #{ENDRKRQ}</if>
-             and CRPB='1'
+            <if test="CRPB == null">  and CRPB='1'</if>
         </where>
     </select>
 
@@ -53,7 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="KDZL != null  and KDZL != ''"> and KDZL = #{KDZL}</if>
             <if test="BEGINRKRQ != null  and BEGINRKRQ != ''"> and RKRQ &gt; #{BEGINRKRQ}</if>
             <if test="ENDRKRQ != null  and ENDRKRQ != ''"> and RKRQ &lt; #{ENDRKRQ}</if>
-             and CRPB='1'
+            <if test="CRPB == null">  and CRPB='1'</if>
         </where>
     </select>
     
@@ -92,6 +92,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update rk_rkjl
         <trim prefix="SET" suffixOverrides=",">
             CRPB = '2'
+        </trim>
+        where RKXH = #{RKXH}
+    </update>
+
+    <update id="updateRkRkjl4CRPB2RK" parameterType="Long">
+        update rk_rkjl
+        <trim prefix="SET" suffixOverrides=",">
+            CRPB = '1'
         </trim>
         where RKXH = #{RKXH}
     </update>

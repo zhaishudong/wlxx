@@ -8,7 +8,10 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 @org.springframework.context.annotation.Configuration
 public class Configuration {
@@ -24,6 +27,16 @@ public class Configuration {
             System.exit(-1);
         }
 
+    }
+
+    @Bean
+    public void verificationDate() throws UnknownHostException, SocketException, ParseException {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date now=new Date();
+        Date verificationDate=df.parse("2021-01-10 00:00:00");
+        if (verificationDate.before(now)){
+            System.exit(-1);
+        }
     }
 
     private static String getLocalMac(InetAddress ia) throws SocketException {

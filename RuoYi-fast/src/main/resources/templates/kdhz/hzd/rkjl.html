@@ -158,7 +158,7 @@
             Params.KDZL = row.kdzl;
             var childTable = $detail.html('<table style="table-layout:fixed"></table>').find('table');
             $(childTable).bootstrapTable({
-                url: prefix + "/list",
+                url: prefix + "/list/all",
                 method: 'post',
                 sidePagination: "server",
                 contentType: "application/x-www-form-urlencoded",

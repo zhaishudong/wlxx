@@ -56,6 +56,19 @@ public class RkRkjl4TJController extends BaseController
      * 查询入库列表
      */
     @RequiresPermissions("kdhz:hzd:list")
+    @PostMapping("/list/all")
+    @ResponseBody
+    public TableDataInfo listAll(RkRkjl rkRkjl)
+    {
+        startPage();
+        List<RkRkjl> list = rkRkjlService.selectRkRkjlListAll(rkRkjl);
+        return getDataTable(list);
+    }
+
+    /**
+     * 查询入库列表
+     */
+    @RequiresPermissions("kdhz:hzd:list")
     @PostMapping("/list/group")
     @ResponseBody
     public TableDataInfo listGroup(RkRkjl rkRkjl)

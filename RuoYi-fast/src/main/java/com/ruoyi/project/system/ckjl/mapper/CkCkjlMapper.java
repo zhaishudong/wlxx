@@ -77,4 +77,7 @@ public interface CkCkjlMapper
      * @return 结果
      */
     public int deleteCkCkjlByIds(String[] CKXHs);
+
+    public List<CkCkjl> selectCkCkjlListlByIds(String[] CKXHs);
+
 }

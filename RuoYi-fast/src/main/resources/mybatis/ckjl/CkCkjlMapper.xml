@@ -112,4 +112,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </foreach>
     </delete>
 
+    <select id="selectCkCkjlListlByIds" parameterType="String" resultMap="CkCkjlResult">
+        <include refid="selectCkCkjlVo"/> where CKXH in
+        <foreach item="CKXH" collection="array" open="(" separator="," close=")">
+            #{CKXH}
+        </foreach>
+    </select>
+
 </mapper>

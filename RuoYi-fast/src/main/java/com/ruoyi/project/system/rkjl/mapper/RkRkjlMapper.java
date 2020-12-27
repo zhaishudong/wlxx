@@ -71,6 +71,14 @@ public interface RkRkjlMapper
     public int updateRkRkjl4CRPB(Long RKXH);
 
     /**
+     * 修改入库
+     *
+     * @param RKXH 入库
+     * @return 结果
+     */
+    public int updateRkRkjl4CRPB2RK(Long RKXH);
+
+    /**
      * 删除入库
      * 
      * @param RKXH 入库ID

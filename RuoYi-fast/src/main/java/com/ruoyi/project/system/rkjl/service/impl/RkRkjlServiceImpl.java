@@ -80,6 +80,34 @@ public class RkRkjlServiceImpl implements IRkRkjlService
      * @return 入库
      */
     @Override
+    public List<RkRkjl> selectRkRkjlListAll(RkRkjl rkRkjl)
+    {
+        String bgDate = (rkRkjl.getParams().get("beginRKRQ")+"");
+        String endDate = (rkRkjl.getParams().get("endRKRQ")+"");
+        if (StrEmpty.isNull(bgDate) && StrEmpty.isNull(endDate)){
+            SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
+            Date date = new Date();
+            bgDate = sdf.format(date);
+            endDate = sdf.format(StrEmpty.dateAddOne(date));
+        }
+        rkRkjl.setBeginRKRQ(bgDate);
+        rkRkjl.setEndRKRQ(endDate);
+        String kddh = rkRkjl.getKDDH();
+        rkRkjl.setCRPB("3");
+        if (StringUtils.isNotBlank(kddh) && kddh.length()>4){
+            return rkRkjlMapper.selectRkRkjlList(rkRkjl);
+        }else {
+            return rkRkjlMapper.selectRkRkjlListBykddh(rkRkjl);
+        }
+    }
+
+    /**
+     * 查询入库列表
+     *
+     * @param rkRkjl 入库
+     * @return 入库
+     */
+    @Override
     public List<RkRkjlByGroup> selectRkRkjlListByGroup(RkRkjl rkRkjl)
     {
         String bgDate = (rkRkjl.getParams().get("beginRKRQ")+"");
@@ -119,6 +147,7 @@ public class RkRkjlServiceImpl implements IRkRkjlService
         //先查询有多少种类快递
         List<RkRkjlByGroup> rkRkjlByGroups = rkRkjlMapper.selectRkRkjlListByGroup(rkRkjl);
         //循环查询每种快递的info
+        rkRkjl.setCRPB("3");
         for (int i = 0; i < rkRkjlByGroups.size(); i++) {
             RkRkjlByGroup rkRkjlByGroup = rkRkjlByGroups.get(i);
             rkRkjl.setKDZL(rkRkjlByGroup.getKDZL());

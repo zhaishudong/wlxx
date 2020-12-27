@@ -43,6 +43,8 @@ public class RkRkjl extends BaseEntity
 
     private String ENDRKRQ;
 
+    private String CRPB;
+
     public void setRKXH(Long RKXH)
     {
         this.RKXH = RKXH;
@@ -112,6 +114,14 @@ public class RkRkjl extends BaseEntity
         this.HZSL = HZSL;
     }
 
+    public String getCRPB() {
+        return CRPB;
+    }
+
+    public void setCRPB(String CRPB) {
+        this.CRPB = CRPB;
+    }
+
 
     @Override
     public String toString() {
@@ -124,6 +134,8 @@ public class RkRkjl extends BaseEntity
             .append("BEGINRKRQ", getBeginRKRQ())
             .append("ENDRKRQ", getEndRKRQ())
             .append("HZSL", getHZSL())
+            .append("CRPB", getCRPB())
+
             .toString();
     }
 }

@@ -140,7 +140,18 @@ public class CkCkjlServiceImpl implements ICkCkjlService
     @Override
     public int deleteCkCkjlByIds(String ids)
     {
-        return ckCkjlMapper.deleteCkCkjlByIds(Convert.toStrArray(ids));
+        List<CkCkjl> ckjlList = ckCkjlMapper.selectCkCkjlListlByIds(Convert.toStrArray(ids));
+        int count = 0;
+        for (int i = 0; i < ckjlList.size(); i++) {
+            CkCkjl ckCkjl = ckjlList.get(i);
+            int issc = ckCkjlMapper.deleteCkCkjlById(ckCkjl.getCKXH());
+            if (issc>0){
+                rkRkjlMapper.updateRkRkjl4CRPB2RK(ckCkjl.getRKGL());
+                count++;
+            }
+        }
+
+        return count;
     }
 
     /**
